@@ -1,74 +1,87 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
-import './Paint.css';
+// src/Paint.js
+import React, { useRef, useEffect, useState } from 'react';
 
 const Paint = () => {
-    const canvasRef = useRef(null);
-    const [context, setContext] = useState(null);
-    const [drawing, setDrawing] = useState(false);
-    const [tool, setTool] = useState('pen');
-    const [color, setColor] = useState('#000');
-    const [brushSize, setBrushSize] = useState(5);
+  const canvasRef = useRef(null);
+  const [drawing, setDrawing] = useState(false);
+  const [color, setColor] = useState('#000000');
+  const [brushSize, setBrushSize] = useState(5);
 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        setContext(ctx);
-    }, []);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    context.lineCap = 'round';
+    context.strokeStyle = color;
+    context.lineWidth = brushSize;
+    
 
     const startDrawing = (e) => {
-        setDrawing(true);
-        context.beginPath();
-        context.moveTo(e.clientX, e.clientY);
+      setDrawing(true);
+      context.beginPath();
+      context.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
     };
 
     const draw = (e) => {
-        if (!drawing) return;
+      if (!drawing) return;
 
-        context.lineCap = 'round';
-        context.lineWidth = brushSize;
-        context.strokeStyle = color;
-
-        context.lineTo(e.clientX, e.clientY);
-        context.stroke();
+      context.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+      context.stroke();
     };
 
     const stopDrawing = () => {
-        setDrawing(false);
-        context.closePath();
+      setDrawing(false);
+      context.closePath();
     };
 
-    const clearCanvas = () => {
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+
+    return () => {
+      canvas.removeEventListener('mousedown', startDrawing);
+      canvas.removeEventListener('mousemove', draw);
+      canvas.removeEventListener('mouseup', stopDrawing);
     };
+  }, [drawing, color, brushSize]);
 
-    return (
-        <div>
-            <ButtonGroup className="tool-buttons">
-                <Button onClick={() => setTool('pen')}>Pen</Button>
-                <Button onClick={() => setTool('eraser')}>Eraser</Button>
-                <Dropdown as={ButtonGroup}>
-                    <Dropdown.Toggle id="dropdown-custom-1">Brush Size</Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => setBrushSize(5)}>Small</Dropdown.Item>
-                        <Dropdown.Item onClick={() => setBrushSize(10)}>Medium</Dropdown.Item>
-                        <Dropdown.Item onClick={() => setBrushSize(15)}>Large</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-                <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
-                <Button onClick={clearCanvas}>Clear</Button>
-            </ButtonGroup>
+  const handleColorChange = (e) => {
+    setColor(e.target.value);
+  };
 
-            <canvas
-                ref={canvasRef}
-                className={`paint-canvas ${tool === 'eraser' && 'eraser'}`}
-                onMouseDown={startDrawing}
-                onMouseMove={draw}
-                onMouseUp={stopDrawing}
-                onMouseOut={stopDrawing}
-            />
-        </div>
-    );
+  const handleBrushSizeChange = (e) => {
+    setBrushSize(parseInt(e.target.value, 10));
+  };
+
+  return (
+    <div>
+      <div>
+        <label htmlFor="colorPicker">Color:</label>
+        <input
+          type="color"
+          id="colorPicker"
+          value={color}
+          onChange={handleColorChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="brushSize">Brush Size:</label>
+        <input
+          type="range"
+          id="brushSize"
+          min="1"
+          max="20"
+          value={brushSize}
+          onChange={handleBrushSizeChange}
+        />
+      </div>
+      <canvas
+        ref={canvasRef}
+        width={window.innerWidth}
+        height={window.innerHeight}
+        style={{ border: '1px solid black' }}
+      />
+    </div>
+  );
 };
 
 export default Paint;

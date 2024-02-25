@@ -25,6 +25,11 @@ const router = createBrowserRouter([
         element: <SignatureCanvas />,
         // loader: teamLoader,
       },
+      {
+        path: "/paint",
+        element: <Paint />,
+        // loader: teamLoader,
+      },
     ],
   },
 ]);
@@ -32,9 +37,9 @@ const router = createBrowserRouter([
 function App() {
 
   return (
-    <>
+    <div className='wrapper'>
     <RouterProvider router={router} />
-    </>
+    </div>
   )
 }
 

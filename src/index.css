@@ -28,7 +28,7 @@
   top: 0;
   bottom: 0;
   position: absolute;
-background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #5c53e0, #dd00f3, #dd00f3);
 background-size: 1800% 1800%;
 
 -webkit-animation: rainbow 18s ease infinite;
@@ -57,7 +57,7 @@ background-size: 1800% 1800%;
     100%{background-position:0% 82%}
 }
 
-
+/* 
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
@@ -73,4 +73,4 @@ header {
 section {
   max-width: 600px;
   margin: 0 auto;
-}
+} */
