@@ -1,0 +1,11 @@
+.paint-canvas {
+    border: 1px solid #000;
+}
+
+.eraser {
+    cursor: url('path-to-eraser-cursor.png'), auto;
+}
+
+.tool-buttons {
+    margin-bottom: 10px;
+}
