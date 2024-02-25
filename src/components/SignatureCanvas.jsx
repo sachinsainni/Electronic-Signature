@@ -127,8 +127,8 @@ const SignaturePad = () => {
 
     console.log()
     const padStyle = {
-        width: width - 70,
-        height: height - 300,
+        width: width - 300,
+        height: height ,
         className: 'border border-5 border-black rounded-4 '
     }
 
@@ -142,10 +142,8 @@ const SignaturePad = () => {
 
     return (
         <div className='d-flex flex-column mx-4' >
-            <h1 className='mt-2' >Electronic Signature Pad ✏️</h1>
-            <span className='my-4' style={outerPadStyle} >
+            <h1 className='m-4' >Electronic Signature Pad ✏️</h1>
                 <SignatureCanvas ref={sigCanvas} penColor={penColor} canvasProps={padStyle} backgroundColor={'#FFFEE6'} throttle={30} velocityFilterWeight={1.2} dotSize={10} />
-            </span>
             <div className='d-flex'>
                 <div className='m-auto d-flex align-items-center'>
                     <div className='fs-5 fw-bold'>Pen Color</div>

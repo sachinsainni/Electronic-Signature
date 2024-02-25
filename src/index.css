@@ -21,8 +21,11 @@
 } */
 
 .wrapper { 
-  height: 100%;
-  width: 100%;
+  min-height: 100vh;
+  max-height: max-content;
+  min-width: 100%;
+  max-width: fit-content;
+  overflow-x: hidden;
   left:0;
   right: 0;
   top: 0;
