@@ -128,7 +128,7 @@ const SignaturePad = () => {
     console.log()
     const padStyle = {
         width: width - 300,
-        height: height ,
+        height: height - 350,
         className: 'border border-5 border-black rounded-4 '
     }
 
